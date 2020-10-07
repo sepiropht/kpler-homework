@@ -19,9 +19,9 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 @Component
 export default class Controls extends Vue {
   @Watch("picked")
-  sortChanged(newVal: number[]) {
+  sortChanged(newVal: string) {
     // console.log(this.picked);
-    this.$emit("toggle-sort", { sort: this.picked });
+    this.$emit("toggle-sort", { sort: newVal });
   }
   private message = "";
   private picked = "One";

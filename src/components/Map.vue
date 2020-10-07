@@ -17,18 +17,21 @@ export default class Map extends Vue {
   async latlngChanged(newVal: number[]) {
     this.latlng = newVal;
     const [lat, lon] = newVal;
-    this?.map.flyTo({
-      center: [lon, lat],
-      zoom: 3,
-      speed: 2
-    });
+    this.map
+      ? this.map.flyTo({
+          center: [lon, lat],
+          zoom: 3,
+          speed: 2
+        })
+      : "";
   }
-  @Watch("test", { deep: true })
-  latlngsChanged(newVal: string) {
+  @Watch("test")
+  latlngsChanged() {
     this.markers.forEach(marker => marker.remove());
     this.markersLatLong.forEach(([lat, lon]) => {
-      const marker = new Marker().setLngLat([lon, lat]).addTo(this.map);
-      this.markers.push(marker);
+      this.map
+        ? this.markers.push(new Marker().setLngLat([lon, lat]).addTo(this.map))
+        : "";
     });
   }
   private accessToken =
