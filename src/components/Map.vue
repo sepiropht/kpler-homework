@@ -1,44 +1,47 @@
 <template>
-  <div class="map">
-    <MglMap :accessToken="accessToken" :mapStyle="mapStyle" />
-  </div>
+  <div id="mapContainer" class="map"></div>
 </template>
 
-<script>
+<script lang="ts">
 import Mapbox from "mapbox-gl";
-import { MglMap } from "vue-mapbox";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
-export default {
-  components: {
-    MglMap,
-  },
-  name: "Map",
-  data() {
-    return {
-      accessToken:
-        "pk.eyJ1Ijoic2VwaXJvcGh0IiwiYSI6ImNrMmdzaXZ5cTAzcDkzZG1seDdwN3R6aXgifQ.rvmMk75-5EUnz-YNQUmq6A", // your access token. Needed if you using Mapbox maps
-      mapStyle: "mapbox://styles/mapbox/streets-v11", // your map style
-    };
-  },
+@Component
+export default class Map extends Vue {
+  @Prop([]) latlng: number[] = [];
 
-  created() {
-    // We need to set mapbox-gl library here in order to use it in template
-    this.mapbox = Mapbox;
-  },
-};
+  @Watch("latlng")
+  async latlngChanged(newVal: number[]) {
+    this.latlng = newVal;
+    const [lat, lon] = newVal;
+    this.map.flyTo({
+      center: [lon, lat],
+      zoom: 4,
+      speed: 2,
+    });
+  }
+  private accessToken =
+    "pk.eyJ1Ijoic2VwaXJvcGh0IiwiYSI6ImNrMmdzaXZ5cTAzcDkzZG1seDdwN3R6aXgifQ.rvmMk75-5EUnz-YNQUmq6A"; // your access token. Needed if you using Mapbox maps
+  private mapStyle = "mapbox://styles/mapbox/streets-v11"; // your map style
+  private map?: Mapbox.Map = undefined;
+
+  mounted() {
+    Mapbox.accessToken = this.accessToken;
+
+    this.map = new Mapbox.Map({
+      container: "mapContainer",
+      style: this.mapStyle,
+      center: [0, 0],
+      zoom: 4,
+    });
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .map {
-  height: 100% !important;
-  width: 100% !important;
-  position: relative;
-}
-MglMap {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  height: 900px;
   width: 100%;
 }
 </style>

@@ -2,8 +2,8 @@
   <div class="container">
     <Controls @input-change="setQuery"></Controls>
     <div class="body">
-      <Countries :query="query"></Countries>
-      <Map></Map>
+      <Countries :query="query" @country-clicked="onCountryClicked"></Countries>
+      <Map :latlng="latlng"></Map>
     </div>
   </div>
 </template>
@@ -23,10 +23,15 @@ import { Component, Vue } from "vue-property-decorator";
 })
 export default class App extends Vue {
   private query = "";
+  private latlng: number[] = [];
 
   public setQuery(payload: { message: string }): void {
     this.query = payload.message;
     console.log(payload.message);
+  }
+  public onCountryClicked(payload: { latlng: number[] }) {
+    this.latlng = payload.latlng;
+    console.log("App", payload.latlng);
   }
 }
 </script>

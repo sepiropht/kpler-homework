@@ -27,8 +27,8 @@ export default class Countries extends Vue {
       : [];
   }
   onCountryClick(country: Country) {
-    Object.keys(country).forEach((key) => console.log(key));
-    console.log(country.latlng);
+    console.log("country", country.latlng);
+    this.$emit("country-clicked", { latlng: country.latlng });
   }
   async getCountries() {
     const countries = await countries$;
@@ -38,4 +38,8 @@ export default class Countries extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+li {
+  cursor: pointer;
+}
+</style>
