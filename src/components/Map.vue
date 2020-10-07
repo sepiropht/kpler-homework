@@ -3,21 +3,32 @@
 </template>
 
 <script lang="ts">
-import Mapbox from "mapbox-gl";
+import Mapbox, { Marker } from "mapbox-gl";
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-
+import { Latlng } from "../App.vue";
 @Component
 export default class Map extends Vue {
   @Prop([]) latlng: number[] = [];
+  @Prop([]) markersLatLong: Latlng[] = [];
+  @Prop(String) test = "";
 
+  private markers: Marker[] = [];
   @Watch("latlng")
   async latlngChanged(newVal: number[]) {
     this.latlng = newVal;
     const [lat, lon] = newVal;
     this?.map.flyTo({
       center: [lon, lat],
-      zoom: 4,
-      speed: 2,
+      zoom: 3,
+      speed: 2
+    });
+  }
+  @Watch("test", { deep: true })
+  latlngsChanged(newVal: string) {
+    this.markers.forEach(marker => marker.remove());
+    this.markersLatLong.forEach(([lat, lon]) => {
+      const marker = new Marker().setLngLat([lon, lat]).addTo(this.map);
+      this.markers.push(marker);
     });
   }
   private accessToken =
@@ -32,7 +43,7 @@ export default class Map extends Vue {
       container: "mapContainer",
       style: this.mapStyle,
       center: [0, 0],
-      zoom: 4,
+      zoom: 2
     });
   }
 }

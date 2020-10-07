@@ -22,8 +22,8 @@ import CountryCard from "./CountryCard.vue";
 
 @Component({
   components: {
-    CountryCard,
-  },
+    CountryCard
+  }
 })
 export default class Countries extends Vue {
   @Prop(String) readonly sort: string = "One";
@@ -37,7 +37,7 @@ export default class Countries extends Vue {
   get queryCountry() {
     let sorted: Country[];
     if (this.sort === "Two") {
-      sorted = sortBy(this.countries, (country) => country.population);
+      sorted = sortBy(this.countries, country => country.population);
     } else {
       sorted = this.countries;
     }
@@ -49,15 +49,23 @@ export default class Countries extends Vue {
   }
 
   get averagePopulation() {
-    console.log("averagePopulation", this.queryCountry);
-    console.log("averagePopulation", this.queryCountry.length);
+    //  console.log("averagePopulation", this.queryCountry);
+    // console.log("averagePopulation", this.queryCountry.length);
     return (
       this.queryCountry.reduce((sum, { population }) => sum + population, 0) /
         this.queryCountry.length || 0
     );
   }
+  @Watch("queryCountry")
+  async listChanged(newVal: Country[]) {
+    //console.log("yeah latlngSelectdCountry Countries");
+    this.$emit("selected-country-latlng", {
+      latlngs: newVal.map(({ latlng }) => latlng)
+    });
+  }
+
   onCountryClick(country: Country) {
-    console.log("country", country.latlng);
+    // console.log("country", country.latlng);
     this.$emit("country-clicked", { latlng: country.latlng });
   }
   async getCountries() {

@@ -8,9 +8,10 @@
       <Countries
         :query="query"
         @country-clicked="onCountryClicked"
+        @selected-country-latlng="onCountryChanged"
         :sort="sort"
       ></Countries>
-      <Map :latlng="latlng"></Map>
+      <Map :test="test" :latlng="latlng" :markersLatLong="latlngs"></Map>
     </div>
   </div>
 </template>
@@ -21,17 +22,21 @@ import Controls from "./components/Controls.vue";
 import Countries from "./components/Countries.vue";
 import { Component, Vue } from "vue-property-decorator";
 
+export type Latlng = number[];
+
 @Component({
   components: {
     Countries,
     Controls,
-    Map,
-  },
+    Map
+  }
 })
 export default class App extends Vue {
   private query = "";
-  private latlng: number[] = [];
+  private latlng: Latlng = [];
   private sort = "One";
+  private latlngs: Latlng[] = [];
+  private test = "";
 
   public setQuery(payload: { message: string }): void {
     this.query = payload.message;
@@ -39,10 +44,15 @@ export default class App extends Vue {
   }
   public onCountryClicked(payload: { latlng: number[] }) {
     this.latlng = payload.latlng;
-    console.log("App", payload.latlng);
+    //console.log("App", payload.latlng);
   }
   public onToggleChanged(payload: { sort: string }) {
     this.sort = payload.sort;
+  }
+  public onCountryChanged(payload: { latlngs: Latlng[] }) {
+    //console.log("Ouncountrulist changed", payload.latlngs);
+    this.latlngs = payload.latlngs;
+    this.test += "a";
   }
 }
 </script>
