@@ -1,6 +1,7 @@
 <template>
   <div class="countries">
     <h1>Countries</h1>
+    <p>Average population of selected countries: {{ averagePopulation }}</p>
     <ul v-for="country in queryCountry" :key="country.name">
       <li v-on:click="onCountryClick(country)">
         <CountryCard
@@ -15,7 +16,8 @@
 
 <script lang="ts">
 import { countries$, Country } from "../services/FetchCountries";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { sortBy } from "lodash";
 import CountryCard from "./CountryCard.vue";
 
 @Component({
@@ -24,6 +26,8 @@ import CountryCard from "./CountryCard.vue";
   },
 })
 export default class Countries extends Vue {
+  @Prop(String) readonly sort: string = "One";
+
   @Prop(String) readonly query: string = "";
   private countries: Country[] = [];
 
@@ -31,11 +35,26 @@ export default class Countries extends Vue {
     this.getCountries();
   }
   get queryCountry() {
+    let sorted: Country[];
+    if (this.sort === "Two") {
+      sorted = sortBy(this.countries, (country) => country.population);
+    } else {
+      sorted = this.countries;
+    }
     return this.query.length
-      ? this.countries.filter(({ name }) =>
+      ? sorted.filter(({ name }) =>
           name.toLowerCase().startsWith(this.query.toLowerCase())
         )
       : [];
+  }
+
+  get averagePopulation() {
+    console.log("averagePopulation", this.queryCountry);
+    console.log("averagePopulation", this.queryCountry.length);
+    return (
+      this.queryCountry.reduce((sum, { population }) => sum + population, 0) /
+        this.queryCountry.length || 0
+    );
   }
   onCountryClick(country: Country) {
     console.log("country", country.latlng);

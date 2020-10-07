@@ -1,8 +1,15 @@
 <template>
   <div class="container">
-    <Controls @input-change="setQuery"></Controls>
+    <Controls
+      @input-change="setQuery"
+      @toggle-sort="onToggleChanged"
+    ></Controls>
     <div class="body">
-      <Countries :query="query" @country-clicked="onCountryClicked"></Countries>
+      <Countries
+        :query="query"
+        @country-clicked="onCountryClicked"
+        :sort="sort"
+      ></Countries>
       <Map :latlng="latlng"></Map>
     </div>
   </div>
@@ -24,6 +31,7 @@ import { Component, Vue } from "vue-property-decorator";
 export default class App extends Vue {
   private query = "";
   private latlng: number[] = [];
+  private sort = "One";
 
   public setQuery(payload: { message: string }): void {
     this.query = payload.message;
@@ -32,6 +40,9 @@ export default class App extends Vue {
   public onCountryClicked(payload: { latlng: number[] }) {
     this.latlng = payload.latlng;
     console.log("App", payload.latlng);
+  }
+  public onToggleChanged(payload: { sort: string }) {
+    this.sort = payload.sort;
   }
 }
 </script>

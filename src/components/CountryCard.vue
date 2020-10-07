@@ -12,10 +12,10 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class CountryCard extends Vue {
-  @Prop(String) readonly name: string = "";
-  @Prop(String) readonly capital: string = "";
-  @Prop(Number) readonly population: string = "";
-  @Prop([]) readonly borders: number[] = [];
+  @Prop(String) readonly name: string;
+  @Prop(String) readonly capital;
+  @Prop(Number) readonly population: number;
+  @Prop([]) readonly borders: number[];
 }
 </script>
 
