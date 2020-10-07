@@ -14,7 +14,7 @@ export default class Map extends Vue {
   async latlngChanged(newVal: number[]) {
     this.latlng = newVal;
     const [lat, lon] = newVal;
-    this.map.flyTo({
+    this?.map.flyTo({
       center: [lon, lat],
       zoom: 4,
       speed: 2,
