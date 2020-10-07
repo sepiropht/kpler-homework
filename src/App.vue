@@ -1,29 +1,57 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="container">
+    <Controls @input-change="setQuery"></Controls>
+    <div class="body">
+      <Countries :query="query"></Countries>
+      <Map></Map>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import Map from "./components/Map.vue";
+import Controls from "./components/Controls.vue";
+import Countries from "./components/Countries.vue";
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
 
 @Component({
   components: {
-    HelloWorld
-  }
+    Countries,
+    Controls,
+    Map,
+  },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  private query = "";
+
+  public setQuery(payload: { message: string }): void {
+    this.query = payload.message;
+    console.log(payload.message);
+  }
+}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.container {
+  display: grid;
+  grid-template-rows: 200px 1fr;
+}
+
+.controls {
+  background-color: yellow;
+}
+.body {
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  min-height: 500px;
+  max-height: 900px;
+}
+
+.country {
+  background-color: red;
+}
+
+.map {
+  background-color: green;
 }
 </style>
