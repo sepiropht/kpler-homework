@@ -3,7 +3,7 @@
     <input
       class="search"
       v-model="message"
-      @keydown="someHandler"
+      @keyup="someHandler"
       placeholder="Search for country"
     />
     <div>

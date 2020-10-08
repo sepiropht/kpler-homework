@@ -52,13 +52,12 @@ export default class Countries extends Vue {
   }
 
   get averagePopulation() {
-    //  console.log("averagePopulation", this.queryCountry);
-    // console.log("averagePopulation", this.queryCountry.length);
     return (
       this.queryCountry.reduce((sum, { population }) => sum + population, 0) /
         this.queryCountry.length || 0
     );
   }
+
   @Watch("queryCountry")
   async listChanged(newVal: Country[]) {
     //console.log("yeah latlngSelectdCountry Countries");
@@ -71,6 +70,7 @@ export default class Countries extends Vue {
     // console.log("country", country.latlng);
     this.$emit("country-clicked", { latlng: country.latlng });
   }
+
   async getCountries() {
     const countries = await countries$;
     this.countries = countries;
