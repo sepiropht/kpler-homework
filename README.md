@@ -1,5 +1,7 @@
 # kpler-homework
 
+[![Demo](https://img.shields.io/badge/demo-online-blue.svg)](https://kpler-homework.vercel.app/)
+
 ## Project setup
 
 ```
