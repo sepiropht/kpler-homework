@@ -28,10 +28,10 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class CountryCard extends Vue {
-  @Prop(String) readonly name: string = "";
-  @Prop(String) readonly capital = "";
-  @Prop(Number) readonly population: number = 0;
-  @Prop([]) readonly borders: number[] = [];
+  @Prop(String) readonly name: string;
+  @Prop(String) readonly capital: string;
+  @Prop(Number) readonly population: number;
+  @Prop([]) readonly borders: number[];
 }
 </script>
 
@@ -42,7 +42,7 @@ export default class CountryCard extends Vue {
   flex-direction: column;
   border: 1px solid black;
   width: 20em;
-  height: 200px;
+  height: 220px;
   border-radius: 5px;
   box-shadow: 2px 4px 4px;
   padding: 10px;
