@@ -58,6 +58,9 @@ export default class App extends Vue {
 </script>
 
 <style>
+ul {
+  list-style-type: none;
+}
 .container {
   display: grid;
   grid-template-rows: 200px 1fr;
@@ -78,6 +81,5 @@ export default class App extends Vue {
 }
 
 .map {
-  background-color: green;
 }
 </style>

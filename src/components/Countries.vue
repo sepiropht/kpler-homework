@@ -8,6 +8,7 @@
           :name="country.name"
           :population="country.population"
           :capital="country.capital"
+          :borders="country.borders"
         />
       </li>
     </ul>
