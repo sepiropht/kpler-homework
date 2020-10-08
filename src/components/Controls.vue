@@ -1,7 +1,11 @@
 <template>
   <div class="controls">
-    <h1>Controls</h1>
-    <input v-model="message" @keydown="someHandler" placeholder="country" />
+    <input
+      class="search"
+      v-model="message"
+      @keydown="someHandler"
+      placeholder="Search for country"
+    />
     <div>
       <h5>Sort By</h5>
       <input type="radio" id="one" value="One" v-model="picked" />
@@ -26,25 +30,29 @@ export default class Controls extends Vue {
   private message = "";
   private picked = "One";
   public someHandler() {
-    this.$emit("input-change", { message: this.message });
+    this.$emit("input-change", { message: this.message.trim() });
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 li {
   display: inline-block;
   margin: 0 10px;
 }
 a {
   color: #42b983;
+}
+.controls {
+  padding: 10px;
+}
+.search {
+  padding: 10px;
+  margin: 25px 0 0;
+  border: 2px solid #eee;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  width: 80%;
 }
 </style>

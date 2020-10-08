@@ -55,7 +55,7 @@ export default class Map extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .map {
-  height: 900px;
+  height: 100%;
   width: 100%;
 }
 </style>

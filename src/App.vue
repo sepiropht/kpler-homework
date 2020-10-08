@@ -58,12 +58,22 @@ export default class App extends Vue {
 </script>
 
 <style>
+html,
+body {
+  height: 100%;
+}
 ul {
   list-style-type: none;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }
 .container {
   display: grid;
   grid-template-rows: 200px 1fr;
+  height: 100%;
 }
 
 .controls {
@@ -73,7 +83,7 @@ ul {
   display: grid;
   grid-template-columns: 20% 1fr;
   min-height: 500px;
-  max-height: 900px;
+  width: 100%;
 }
 
 .country {

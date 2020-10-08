@@ -1,7 +1,9 @@
 <template>
   <div class="countries">
-    <h1>Countries</h1>
-    <p>Average population of selected countries: {{ averagePopulation }}</p>
+    <p>
+      Average population of selected countries:
+      <strong>{{ averagePopulation }}</strong>
+    </p>
     <ul v-for="country in queryCountry" :key="country.name">
       <li v-on:click="onCountryClick(country)">
         <CountryCard
@@ -78,7 +80,7 @@ export default class Countries extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-li {
-  cursor: pointer;
+.countries {
+  overflow-y: scroll;
 }
 </style>
